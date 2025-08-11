@@ -31,7 +31,7 @@ With support for models (`.mdl`), materials (`.vmt`), textures (`.vtf`), and ent
 ## How It Works
 
 1. **Input Entries**
-   - You can add one or more entries, each with a type (`Model`, `Vmt`, `Vtf`, or `Folder`) and a path.
+   - You can add one or more entries, each with a type (`mdl`, `vmt`, `vtf`, or a `Folder`) and a path.
    - The tool can be run via CLI or its integrated WPF-based UI.
 
 2. **Processing Pipeline**
