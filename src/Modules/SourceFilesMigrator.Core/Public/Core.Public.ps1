@@ -63,44 +63,6 @@ function Get-StringPoolFromBinary {
     $text -split "\x00+" | Where-Object { $_.Length -ge 2 }
 }
 
-function Get-TextureInfoFromMdl {
-    [CmdletBinding()]
-    param([Parameter(Mandatory)][string]$MdlFilePath)
-
-    if (-not (Test-Path -LiteralPath $MdlFilePath)) { throw "Model file not found: $MdlFilePath" }
-    [byte[]]$bytes = [System.IO.File]::ReadAllBytes($MdlFilePath)
-    $pool = Get-StringPoolFromBinary -BinaryBytes $bytes
-
-    $cdDirs = $pool |
-        Where-Object { ($_ -like "models\*") -or ($_ -like "models/*") } |
-        ForEach-Object {
-            $n = ($_ -replace '/', '\')
-            if ($n[-1] -ne '\') { $n += '\' }
-            $n
-        } | Sort-Object -Unique
-
-    $exclude = @(
-        'default','idle','@idle','body','static_prop','prop','player','male','female',
-        'ragdoll','cloth','trigger','sequence','physics','gib','lod','lods','lod1','lod2',
-        'open','close','locked','unlock','Wood','Metal','Glass','Flesh','Concrete',
-        'IDST','IDST0','IDST1','IDAG','IDSQ'
-    )
-
-    $bases = $pool |
-        Where-Object {
-            ($_ -notmatch "[\\/\.]") -and
-            ($_ -match "^[A-Za-z0-9_\-]+$") -and
-            ($exclude -notcontains $_) -and
-            ($_.Length -ge 3)
-        } | Sort-Object -Unique
-
-    # Force arrays so .Count is safe even for singletons
-    [pscustomobject]@{
-        CdMaterialDirectories = @($cdDirs)
-        MaterialBasenames    = @($bases)
-    }
-}
-
 # --- Models pathing ---
 function Get-ModelRelativeSubPath {
     [CmdletBinding()]
