@@ -198,10 +198,10 @@ function Get-TextureLogicalPathsFromSingleVmt {
 
         # LUX Sky_HDRI
         'SkyTextureX1Y1', 'SkyTextureX2Y1', 'SkyTextureX3Y1', 'SkyTextureX4Y1',
-        'SkyTextureX1Y2', 'SkyTextureX2Y2', 'SkyTextureX3Y2', 'SkyTextureX4Y2'
+        'SkyTextureX1Y2', 'SkyTextureX2Y2', 'SkyTextureX3Y2', 'SkyTextureX4Y2',
 
         # LUX  ( not necessarily a Strata thing )
-        'NormalTexture',
+        'NormalTexture'
     )
 
     $logical = New-Object System.Collections.Generic.HashSet[string]
