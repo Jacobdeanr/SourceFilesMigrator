@@ -142,7 +142,7 @@ function Start-SourceFilesMigratorUI {
     })
 
     # Import helper functions from UI.Private if not already in scope
-    if (-not (Get-Command Filter-Path -ErrorAction SilentlyContinue)) {
+    if (-not (Get-Command Test-PathExclution -ErrorAction SilentlyContinue)) {
         # Private functions are already dot-sourced by the module .psm1; this is just a safety net.
     }
 
@@ -153,7 +153,7 @@ function Start-SourceFilesMigratorUI {
         foreach ($p in $paths) {
             if ([string]::IsNullOrWhiteSpace($p)) { continue }
             $full = try { (Resolve-Path -LiteralPath $p).Path } catch { $p }
-            if (Filter-Path -Path $full) {
+            if (Test-PathExclution -Path $full) {
                 Append-Log "Skipped by exclude rules: $full"
                 continue
             }

@@ -1,12 +1,15 @@
-# Shared exclude regex (kept here to avoid UI dependency)
-$script:SourceFilesMigratorExcludePatterns = @(
-  '\bdev[\\/]', '\bpsd\b', '\bpsb\b', '\bvray\b', '\bbackup\b', '\btemp\b',
-  'thumbs\.db$', '(^|[\\/])\._', '\.bak$', '\.blend.*$', '\.psd$', '\.mdmp$'
-) -join '|'
+Set-StrictMode -Version Latest
 
-function Filter-Path {
-  param([Parameter(Mandatory)][string]$Path)
-  return [Regex]::IsMatch($Path, $script:SourceFilesMigratorExcludePatterns, 'IgnoreCase')
+# No more local regex. Use the shared predicate.
+function Test-PathExclution {
+    <#
+    .SYNOPSIS
+        Back-compat shim (note: original spelling error kept).
+        Forwards to Test-SfmPathExclusion from SourceFilesMigrator.Shared.
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Path)
+    return (Test-SfmPathExclusion -Path $Path)
 }
 
 function Get-FolderInventory {
@@ -18,18 +21,18 @@ function Get-FolderInventory {
     $vtfs   = New-Object System.Collections.Generic.List[string]
 
     Get-ChildItem -LiteralPath $FolderPath -File -Recurse -Force -ErrorAction SilentlyContinue |
-      Where-Object {
-        -not (Filter-Path -Path $_.FullName) -and
-        -not ($_.Attributes -band [IO.FileAttributes]::ReparsePoint)
-      } |
-      ForEach-Object {
-        $f = $_; $ext = $f.Extension.ToLowerInvariant()
-        switch ($ext) {
-            '.mdl' { $models.Add($f.FullName) | Out-Null }
-            '.vmt' { $vmts.Add($f.FullName)   | Out-Null }
-            '.vtf' { $vtfs.Add($f.FullName)   | Out-Null }
+        Where-Object {
+            -not (Test-PathExclution -Path $_.FullName) -and
+            -not ($_.Attributes -band [IO.FileAttributes]::ReparsePoint)
+        } |
+        ForEach-Object {
+            $f = $_; $ext = $f.Extension.ToLowerInvariant()
+            switch ($ext) {
+                '.mdl' { $models.Add($f.FullName) | Out-Null }
+                '.vmt' { $vmts.Add($f.FullName)   | Out-Null }
+                '.vtf' { $vtfs.Add($f.FullName)   | Out-Null }
+            }
         }
-      }
 
     [pscustomobject]@{
         Models = @($models)

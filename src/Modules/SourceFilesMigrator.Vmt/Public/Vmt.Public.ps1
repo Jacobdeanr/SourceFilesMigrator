@@ -142,10 +142,66 @@ function Get-TextureLogicalPathsFromSingleVmt {
         'paintsplatnormalmap','paintsplatbubblelayout','paintsplatbubble','paintenvmap',
         
         # strata
-        'flashlighttexture','mraotexture','mraotexture2','normaltexture','emissiontexture','emissiontexture2',
+        'flashlighttexture','mraotexture','mraotexture2','emissiontexture','emissiontexture2',
         
         # Black Mesa
-        'specmap_texture','moss_texture'
+        'specmap_texture','moss_texture',
+
+        # Stock VertexLitGeneric:
+        'SelfIllumMask',
+
+        # Stock EmissiveBlend
+        'EmissiveBlendBaseTexture', 'EmissiveBlendFlowTexture', 'EmissiveBlendTexture'
+
+        # Stock Flesh Interior Pass
+        'FleshInteriorTexture', 'FleshInteriorNoiseTexture', 'FleshBorderTexture1D', 'FleshNormalTexture', 'FleshSubSurfaceTexture', 'FleshCubeTexture',
+
+        # Stock Cloud Shader
+        'CloudAlphaTexture',
+
+        # Stock ParallaxTest ( ASW+ )
+        'HeightMap',
+
+        # Couple of Shaders like Stock UnlitTwoTexture 
+        'Texture2',
+
+        # Stock ScreenSpace_General ( also has Texture2 )
+        'Texture3',
+
+        # Stock Refract Shader
+        'RefractTintTexture',
+
+        # Stock Wrinkle Mapping has these two as well
+        'BumpCompress', 'BumpStretch',
+
+        # Usually set to Rendertargets, but I have seen users before that specified
+        # regular Textures to fake certain Effects like Parallax offsets 
+        'RefractTexture', 'ReflectTexture',
+
+        # More Sky Textures, although they may be unusable atm on Stock Shaders
+        'HDRCompressedTexture0', 'HDRCompressedTexture1', 'HDRCompressedTexture2',
+
+        # SpriteCard Shader
+        'RampTexture',
+
+        # L4D2 Infected Shader
+        'WoundCutOutTexture', 'GradientTexture', 'BurnDetailTexture'
+
+        # LUX WorldVertexTransition
+        'PhongExponentTexture2', 'SelfIllumMask2', 
+
+        # LUX Expensive Water
+        'Surface_BumpMap',
+
+        # LUX UnlitTwoTexture / LUX_UnlitCombineTextures
+        'Texture4', 'Texture5', 'Texture6', 'Texture7', 'Texture8', 'Texture9', 'Texture10', 'Texture11', 'Texture12', 'Texture13', 
+
+        # LUX Sky_HDRI
+        'SkyTextureX1Y1', 'SkyTextureX2Y1', 'SkyTextureX3Y1', 'SkyTextureX4Y1',
+        'SkyTextureX1Y2', 'SkyTextureX2Y2', 'SkyTextureX3Y2', 'SkyTextureX4Y2'
+
+        # LUX  ( not necessarily a Strata thing )
+        'NormalTexture',
     )
 
     $logical = New-Object System.Collections.Generic.HashSet[string]

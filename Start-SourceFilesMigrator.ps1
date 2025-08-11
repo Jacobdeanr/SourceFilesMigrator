@@ -38,6 +38,7 @@ if ([System.Threading.Thread]::CurrentThread.ApartmentState -ne [System.Threadin
 # 2) Import modules (relative to repo root)
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $mods = @(
+  (Join-Path $root 'src/Modules/SourceFilesMigrator.Shared/SourceFilesMigrator.Shared.psd1'),
   (Join-Path $root 'src/Modules/SourceFilesMigrator.Core/SourceFilesMigrator.Core.psd1'),
   (Join-Path $root 'src/Modules/SourceFilesMigrator.VMT/SourceFilesMigrator.VMT.psd1'),
   (Join-Path $root 'src/Modules/SourceFilesMigrator.Commands/SourceFilesMigrator.Commands.psd1'),
